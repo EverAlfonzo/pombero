@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ───────────────────────────── Paleta del juego
+   Día: rojo tierra, ocre de siesta, verde monte, cielo blanquecino de calor.
+   Noche: azules profundos y luciérnagas amarillas. */
+@theme {
+  --color-tierra: #a3412a;
+  --color-tierra-oscura: #6e2a1b;
+  --color-ocre: #d9a441;
+  --color-ocre-claro: #f0cf84;
+  --color-monte: #2f5d34;
+  --color-monte-oscuro: #183a22;
+  --color-cielo: #f4efe1;
+  --color-lapacho: #e46aa6;
+  --color-noche: #0b1630;
+  --color-noche-media: #16285a;
+  --color-luciernaga: #ffe55c;
+  --color-papel: #fbf6ea;
+  --color-tinta: #1d1410;
+
+  --font-display: var(--font-grenze), "Georgia", serif;
+  --font-body: var(--font-atkinson), system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 0.7s ease-out both;
+  --animate-rise: rise 0.5s ease-out both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Número que flota cuando cambia el respeto (+10 / −20). */
+@keyframes float-delta {
+  0% { opacity: 0; transform: translate(-50%, 6px) scale(0.8); }
+  15% { opacity: 1; transform: translate(-50%, 0) scale(1.15); }
+  70% { opacity: 1; transform: translate(-50%, -14px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -24px) scale(1); }
+}
+
+/* Luciérnagas: deriva + parpadeo. */
+@keyframes firefly-drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(6px, -8px); }
+  50% { transform: translate(-4px, -14px); }
+  75% { transform: translate(-8px, -4px); }
+}
+
+@keyframes firefly-blink {
+  0%, 100% { opacity: 0.1; }
+  45%, 60% { opacity: 1; }
+}
+
+/* Ojos del Pombero: parpadeo lento. */
+@keyframes eyes-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes eyes-glow {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+/* Calor de la siesta que hace temblar el aire. */
+@keyframes heat-shimmer {
+  0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.35; }
+  50% { transform: translateY(-3px) scaleY(1.02); opacity: 0.55; }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@keyframes light-shaft {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.32; }
+}
+
+@keyframes caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes wave-draw {
+  from { stroke-dashoffset: var(--len, 1000); }
+  to { stroke-dashoffset: 0; }
+}
+
+
+.firefly {
+  animation: firefly-drift var(--dur, 6s) ease-in-out infinite, firefly-blink var(--blink, 2.6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transform-box: fill-box;
+}
+
+.eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: eyes-blink 5s infinite, eyes-glow 2.4s ease-in-out infinite;
+}
+
+.shimmer {
+  animation: heat-shimmer 3.5s ease-in-out infinite;
+}
+
+.sway {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: sway 6s ease-in-out infinite;
+}
+
+.shaft {
+  animation: light-shaft 5s ease-in-out infinite;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--color-noche);
+  color: var(--color-papel);
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Foco visible y de alto contraste para teclado. */
+:focus-visible {
+  outline: 3px solid var(--color-luciernaga);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
