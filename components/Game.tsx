@@ -9,7 +9,7 @@ import { ENDINGS, SCENES, SPEAKERS } from "@/data/story";
 import { audio } from "@/lib/audio";
 import { formatText, gameReducer, initialState, type GameState } from "@/lib/gameReducer";
 import { loadMuted, loadUnlockedEndings, saveMuted, saveUnlockedEndings } from "@/lib/storage";
-import type { AmbientId, BackgroundId } from "@/lib/types";
+import type { AmbientId, BackgroundId, HonditaState, TitoPose } from "@/lib/types";
 import BirdOrPomberoGame from "./BirdOrPomberoGame";
 import ChoiceList from "./ChoiceList";
 import DialogueBox from "./DialogueBox";
@@ -20,17 +20,37 @@ import OfferingPicker from "./OfferingPicker";
 import SceneView from "./SceneView";
 import TitleScreen from "./TitleScreen";
 
-/** Fondo y ambiente de la escena actual, aplicando los cambios de cada línea ya mostrada. */
-function resolveSceneLook(state: GameState): { background: BackgroundId; ambient: AmbientId } {
+interface SceneLook {
+  background: BackgroundId;
+  ambient: AmbientId;
+  titoPose: TitoPose;
+  hondita: HonditaState;
+}
+
+/**
+ * Fondo, ambiente y pose de Tito de la escena actual, aplicando los cambios
+ * de cada línea ya mostrada.
+ */
+function resolveSceneLook(state: GameState): SceneLook {
   const scene = SCENES[state.sceneId];
-  let background = scene.background;
-  let ambient = scene.ambient;
+  const look: SceneLook = {
+    background: scene.background,
+    ambient: scene.ambient,
+    titoPose: scene.titoPose,
+    hondita: scene.hondita,
+  };
   for (const line of state.queue.slice(0, state.lineIndex + 1)) {
-    if (line.background) background = line.background;
-    if (line.ambient) ambient = line.ambient;
+    if (line.background) look.background = line.background;
+    if (line.ambient) look.ambient = line.ambient;
+    if (line.titoPose) look.titoPose = line.titoPose;
+    if (line.hondita) look.hondita = line.hondita;
   }
-  if (state.screen === "minigame") ambient = "forest";
-  return { background, ambient };
+  if (state.screen === "minigame") {
+    // Durante el minijuego Tito escucha quieto.
+    look.ambient = "forest";
+    look.titoPose = "idle";
+  }
+  return look;
 }
 
 function resolveAmbient(state: GameState): AmbientId {
@@ -136,7 +156,7 @@ export default function Game() {
   // ── Partida en curso: escena, cocina o minijuego dentro del mismo marco
   // (así el medidor y el inventario no se vuelven a montar).
   const scene = SCENES[state.sceneId];
-  const { background } = resolveSceneLook(state);
+  const { background, titoPose, hondita } = resolveSceneLook(state);
   const line = state.queue[state.lineIndex];
 
   let content: React.ReactNode = null;
@@ -189,6 +209,9 @@ export default function Game() {
       onToggleMute={toggleMute}
       onMenu={() => dispatch({ type: "GO_TITLE" })}
       transitionKey={`${state.runId}-${state.sceneId}-${state.screen}`}
+      tito={{ pose: titoPose, hondita }}
+      // En la cocina y el minijuego el panel es alto: en celulares Tito se oculta.
+      titoOnMobile={state.screen === "scene"}
     >
       {content}
     </SceneView>

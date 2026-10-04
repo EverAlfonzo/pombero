@@ -11,7 +11,7 @@ export default function Inventory({ items }: { items: OfferingId[] }) {
 
   return (
     <div
-      className="flex items-center gap-1 rounded-full border-2 border-papel/40 bg-tinta/85 px-2 py-1"
+      className="comic-shadow flex items-center gap-1 rounded-full border-[3px] border-tinta bg-papel px-2 py-1"
       role="img"
       aria-label={label}
       title={label}
@@ -22,7 +22,7 @@ export default function Inventory({ items }: { items: OfferingId[] }) {
           <span
             key={id ?? `vacio-${i}`}
             className={`flex h-9 w-9 items-center justify-center rounded-full ${
-              Icon ? "animate-rise bg-papel/15" : "border border-dashed border-papel/30"
+              Icon ? "animate-rise bg-ocre-claro" : "border-2 border-dashed border-tinta/30"
             }`}
           >
             {Icon && <Icon className="h-7 w-7" />}

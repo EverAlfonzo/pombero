@@ -27,11 +27,11 @@ export default function HowToPlay({ onBack }: { onBack: () => void }) {
         <h2 className="mt-8 font-display text-3xl font-bold text-ocre-claro">Glosario</h2>
         <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
           {HOW_TO_PLAY.glossary.map((g) => (
-            <div key={g.word} className="rounded-xl border-2 border-papel/20 bg-[#140c09] px-4 py-3">
-              <dt className="text-lg font-bold text-luciernaga italic">
+            <div key={g.word} className="comic-panel px-4 py-3">
+              <dt className="text-lg font-bold text-tierra-oscura italic">
                 {g.word}
               </dt>
-              <dd className="text-papel/90">{g.meaning}</dd>
+              <dd className="text-tinta/85">{g.meaning}</dd>
             </div>
           ))}
         </dl>

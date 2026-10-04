@@ -49,7 +49,7 @@ export default function RespectMeter({ value, change }: { value: number; change:
   }, [change]);
 
   return (
-    <div className="relative flex items-center gap-2 rounded-full border-2 border-papel/40 bg-tinta/85 py-1 pr-3 pl-2">
+    <div className="comic-shadow relative flex items-center gap-2 rounded-full border-[3px] border-tinta bg-papel py-1 pr-3 pl-2 text-tinta">
       <svg
         ref={featherRef}
         viewBox="0 0 40 80"
@@ -73,23 +73,23 @@ export default function RespectMeter({ value, change }: { value: number; change:
             style={{ transform: `translateY(${offset}px)`, transition: "transform 0.8s ease-out, fill 0.8s" }}
           />
         </g>
-        <path d={FEATHER} fill="none" stroke="#fbf6ea" strokeWidth="2" />
-        <path d="M20 10 V78" stroke="#fbf6ea" strokeWidth="1.6" opacity="0.8" />
+        <path d={FEATHER} fill="none" stroke="#1d1410" strokeWidth="3" />
+        <path d="M20 10 V78" stroke="#1d1410" strokeWidth="2" />
       </svg>
       <div className="leading-tight">
-        <div className="hidden text-[0.7rem] font-bold tracking-wide text-papel/80 uppercase sm:block">
+        <div className="hidden text-[0.7rem] font-bold tracking-wide text-tinta/75 uppercase sm:block">
           Respeto al monte
         </div>
         <div className="text-lg font-bold tabular-nums">
           {value}
-          <span className="text-sm font-normal text-papel/70">/100</span>
+          <span className="text-sm font-normal text-tinta/60">/100</span>
         </div>
       </div>
 
       {change && (
         <span
           key={`delta-${change.id}`}
-          className={`pointer-events-none absolute -top-3 left-1/2 rounded-full px-2 text-base font-bold ${
+          className={`pointer-events-none absolute -top-3 left-1/2 rounded-full border-2 border-tinta px-2 text-base font-bold ${
             up ? "bg-[#5fae4f] text-tinta" : "bg-[#d4553a] text-papel"
           }`}
           style={{ animation: "float-delta 1.6s ease-out forwards" }}

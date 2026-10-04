@@ -67,23 +67,25 @@ export default function EndingScreen({
         <p className="text-sm font-bold tracking-[0.25em] text-papel/80 uppercase">
           {ending.secret ? "Final secreto" : "Final"}
           {isNew && (
-            <span className="ml-2 rounded-full bg-luciernaga px-2 py-0.5 tracking-normal text-tinta normal-case">
+            <span className="ml-2 rounded-full border-2 border-tinta bg-luciernaga px-2 py-0.5 tracking-normal text-tinta normal-case">
               ¡Nuevo!
             </span>
           )}
         </p>
-        <h1 className={`font-display text-5xl leading-tight font-bold sm:text-6xl ${TONE_COLOR[ending.tone]}`}>
+        <h1
+          className={`font-display text-5xl leading-tight font-bold drop-shadow-[3px_3px_0_#1d1410] sm:text-6xl ${TONE_COLOR[ending.tone]}`}
+        >
           {ending.title}
         </h1>
 
-        <div className="mt-4 space-y-3 rounded-2xl border-2 border-papel/25 bg-[#140c09]/88 p-5 text-lg leading-relaxed">
+        <div className="comic-panel mt-4 space-y-3 p-5 text-lg leading-relaxed">
           {ending.paragraphs.map((p, i) => (
             <p key={i} className="animate-rise" style={{ animationDelay: `${300 + i * 650}ms` }}>
               {format(p)}
             </p>
           ))}
           {ending.id !== "siesta" && (
-            <p className="pt-1 text-sm text-papel/75">Respeto al monte final: {respect}/100</p>
+            <p className="pt-1 text-sm text-tinta/70">Respeto al monte final: {respect}/100</p>
           )}
         </div>
 

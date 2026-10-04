@@ -65,14 +65,14 @@ export default function DialogueBox({ speaker, text, interactive = true, onAdvan
   const body = (
     <>
       {speaker && (
-        <span className="absolute -top-4 left-4 rounded-lg border-2 border-ocre-claro bg-ocre px-3 py-0.5 font-display text-xl font-bold text-tinta shadow">
+        <span className="absolute -top-5 left-4 -rotate-2 rounded-lg border-[3px] border-tinta bg-ocre px-3 py-0.5 font-display text-xl font-bold text-tinta shadow-[3px_3px_0_#1d1410]">
           {speaker}
         </span>
       )}
       {/* Texto visible animado (oculto a lectores de pantalla). */}
       <p
         aria-hidden="true"
-        className={`min-h-[4.5em] text-lg leading-relaxed sm:text-xl ${speaker ? "pt-2 text-papel" : "text-papel/95 italic"}`}
+        className={`min-h-[4.5em] text-lg leading-relaxed sm:text-xl ${speaker ? "pt-2 text-tinta" : "text-tinta/90 italic"}`}
       >
         {text.slice(0, shown)}
         {/* El resto del texto ocupa lugar para que la caja no "salte". */}
@@ -86,7 +86,7 @@ export default function DialogueBox({ speaker, text, interactive = true, onAdvan
       {interactive && (
         <span
           aria-hidden="true"
-          className={`absolute right-4 bottom-2 text-sm font-bold text-ocre-claro ${done ? "" : "opacity-0"}`}
+          className={`absolute right-4 bottom-2 text-sm font-bold text-tierra ${done ? "" : "opacity-0"}`}
           style={done ? { animation: "caret 1.2s step-end infinite" } : undefined}
         >
           Seguir ▸
@@ -96,7 +96,7 @@ export default function DialogueBox({ speaker, text, interactive = true, onAdvan
   );
 
   const boxClass =
-    "relative block w-full rounded-2xl border-2 border-papel/30 bg-[#140c09]/90 px-5 pt-5 pb-8 text-left shadow-2xl backdrop-blur-sm";
+    "comic-panel relative block w-full px-5 pt-5 pb-8 text-left";
 
   if (!interactive) return <div className={boxClass}>{body}</div>;
 
@@ -104,7 +104,7 @@ export default function DialogueBox({ speaker, text, interactive = true, onAdvan
     <button
       type="button"
       onClick={handleActivate}
-      className={`${boxClass} cursor-pointer hover:border-papel/50`}
+      className={`${boxClass} cursor-pointer hover:bg-white`}
       aria-label={done ? "Seguir" : "Mostrar todo el texto"}
     >
       {body}

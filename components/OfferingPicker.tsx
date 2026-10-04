@@ -43,10 +43,10 @@ export default function OfferingPicker({ onConfirm }: { onConfirm: (items: Offer
   }, []);
 
   return (
-    <div className="rounded-2xl border-2 border-papel/30 bg-[#140c09]/92 p-5 shadow-2xl">
-      <h2 className="font-display text-3xl font-bold text-ocre-claro">{OFFERINGS_TEXT.title}</h2>
+    <div className="comic-panel p-5">
+      <h2 className="font-display text-3xl font-bold text-tierra-oscura">{OFFERINGS_TEXT.title}</h2>
       <p className="mt-2 text-lg leading-relaxed">{OFFERINGS_TEXT.intro}</p>
-      <p className="mt-2 font-bold text-ocre-claro" aria-live="polite">
+      <p className="mt-2 font-bold text-tierra" aria-live="polite">
         {OFFERINGS_TEXT.hint} ({selected.length}/{MAX_OFFERINGS})
       </p>
 
@@ -63,10 +63,8 @@ export default function OfferingPicker({ onConfirm }: { onConfirm: (items: Offer
               onClick={() => toggle(id)}
               aria-pressed={isOn}
               disabled={disabled}
-              className={`flex items-center gap-3 rounded-xl border-2 p-3 text-left transition-colors sm:flex-col sm:text-center ${
-                isOn
-                  ? "border-ocre bg-ocre/20"
-                  : "border-papel/40 bg-tinta/80 hover:border-papel disabled:opacity-45"
+              className={`flex items-center gap-3 rounded-xl border-[3px] border-tinta p-3 text-left transition-colors sm:flex-col sm:text-center ${
+                isOn ? "comic-shadow bg-ocre" : "bg-white/70 hover:bg-white disabled:opacity-45"
               }`}
             >
               <Icon className="h-12 w-12 shrink-0" />
@@ -74,7 +72,7 @@ export default function OfferingPicker({ onConfirm }: { onConfirm: (items: Offer
                 <span className="flex items-center gap-2 text-lg font-bold sm:justify-center">
                   <Kbd>{i + 1}</Kbd> {o.name} {isOn && <span aria-hidden="true">✓</span>}
                 </span>
-                <span className="block text-sm text-papel/85">{o.description}</span>
+                <span className="block text-sm text-tinta/80">{o.description}</span>
               </span>
             </button>
           );

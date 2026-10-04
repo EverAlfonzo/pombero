@@ -13,7 +13,7 @@ export default function EndingsGallery({ unlocked, onBack }: { unlocked: EndingI
       <div className="mx-auto max-w-3xl">
         <div className="flex items-center justify-between gap-3">
           <h1 className="font-display text-4xl font-bold text-ocre-claro sm:text-5xl">Finales</h1>
-          <span className="rounded-full border-2 border-papel/40 px-3 py-1 font-bold tabular-nums">
+          <span className="comic-shadow rounded-full border-[3px] border-tinta bg-papel px-3 py-1 font-bold text-tinta tabular-nums">
             {count}/{ENDING_ORDER.length}
           </span>
         </div>
@@ -26,9 +26,9 @@ export default function EndingsGallery({ unlocked, onBack }: { unlocked: EndingI
             return (
               <li
                 key={id}
-                className="overflow-hidden rounded-2xl border-2 border-papel/25 bg-[#140c09]"
+                className="comic-panel overflow-hidden"
               >
-                <div className="relative h-36 overflow-hidden bg-black">
+                <div className="relative h-36 overflow-hidden border-b-[3px] border-tinta bg-tinta">
                   {isUnlocked ? (
                     <SceneBackground id={ending.background} />
                   ) : (
@@ -38,20 +38,20 @@ export default function EndingsGallery({ unlocked, onBack }: { unlocked: EndingI
                   )}
                 </div>
                 <div className="p-4">
-                  <p className="text-xs font-bold tracking-widest text-papel/70 uppercase">
+                  <p className="text-xs font-bold tracking-widest text-tinta/70 uppercase">
                     {ending.secret ? "Final secreto" : "Final"}
                   </p>
                   {isUnlocked ? (
                     <>
-                      <h2 className="font-display text-3xl font-bold text-ocre-claro">{ending.title}</h2>
-                      <p className="mt-1 text-papel/90">{ending.summary}</p>
+                      <h2 className="font-display text-3xl font-bold text-tierra-oscura">{ending.title}</h2>
+                      <p className="mt-1 text-tinta/85">{ending.summary}</p>
                     </>
                   ) : (
                     <>
-                      <h2 className="font-display text-3xl font-bold text-papel/50" aria-label="Final bloqueado">
+                      <h2 className="font-display text-3xl font-bold text-tinta/40" aria-label="Final bloqueado">
                         ???
                       </h2>
-                      <p className="mt-1 text-papel/60">Todavía no lo descubriste.</p>
+                      <p className="mt-1 text-tinta/60">Todavía no lo descubriste.</p>
                     </>
                   )}
                 </div>

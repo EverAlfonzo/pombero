@@ -80,6 +80,8 @@ export const SCENES: Record<SceneId, Scene> = {
     time: "13:30",
     background: "rancho",
     ambient: "day",
+    titoPose: "idle",
+    hondita: "pocket",
     lines: [
       {
         text: "Una compañía de tierra colorada, a la hora en que el kuarahy aprieta. Las chicharras no se callan nunca.",
@@ -103,6 +105,7 @@ export const SCENES: Record<SceneId, Scene> = {
         outcome: [
           {
             text: "Tito salta por la ventana sin hacer ruido y corre descalzo hacia los naranjos.",
+            titoPose: "walk",
           },
         ],
         goto: { type: "scene", scene: "pitogue" },
@@ -110,14 +113,20 @@ export const SCENES: Record<SceneId, Scene> = {
       {
         id: "cocina",
         label: "Pasar antes por la cocina",
-        outcome: [{ text: "Tito entra en puntas de pie a la cocina, conteniendo la respiración." }],
+        outcome: [
+          { text: "Tito entra en puntas de pie a la cocina, conteniendo la respiración.", titoPose: "walk" },
+        ],
         goto: { type: "offerings", then: "pitogue" },
       },
       {
         id: "dormir",
         label: "Quedarse a dormir",
         outcome: [
-          { text: "Tito suelta la hondita, se da vuelta y cierra los ojos. Esta vez, de verdad." },
+          {
+            text: "Tito suelta la hondita, se da vuelta y cierra los ojos. Esta vez, de verdad.",
+            titoPose: "sleepy",
+            hondita: "none",
+          },
         ],
         goto: { type: "ending", ending: "siesta" },
       },
@@ -132,6 +141,8 @@ export const SCENES: Record<SceneId, Scene> = {
     time: "14:00",
     background: "naranjal",
     ambient: "day",
+    titoPose: "idle",
+    hondita: "hand",
     lines: [
       {
         text: "Al borde del ka'aguy, el naranjal huele a azahar y a fruta caída. Todo zumba de calor.",
@@ -140,7 +151,7 @@ export const SCENES: Record<SceneId, Scene> = {
         text: "En una rama baja, un pitogüé infla su pecho amarillo y canta: «¡pi-to-güé!»",
         sfx: "pitogue",
       },
-      { speaker: "tito", text: "Ese es fácil…" },
+      { speaker: "tito", text: "Ese es fácil…", titoPose: "aim" },
     ],
     choices: [
       {
@@ -156,6 +167,7 @@ export const SCENES: Record<SceneId, Scene> = {
           {
             text: "…y de golpe el monte se queda en silencio. Ni una chicharra. Tito siente que alguien lo mira desde los árboles.",
             ambient: "silence",
+            titoPose: "scared",
           },
         ],
         goto: { type: "scene", scene: "senales" },
@@ -168,6 +180,8 @@ export const SCENES: Record<SceneId, Scene> = {
           {
             text: "Tito guarda la hondita y sigue al pitogüé de rama en rama, cada vez más adentro del monte.",
             background: "naranjal-vacio",
+            titoPose: "walk",
+            hondita: "pocket",
           },
         ],
         goto: { type: "scene", scene: "senales" },
@@ -180,10 +194,12 @@ export const SCENES: Record<SceneId, Scene> = {
           {
             text: "Tito junta los labios y silba: «pi-to-güé». El pájaro inclina la cabeza, curioso.",
             sfx: "silbido-tito",
+            titoPose: "whistle",
           },
           {
             text: "Entonces, desde lo hondo del monte, alguien le contesta el silbido. Igualito. Demasiado igualito.",
             sfx: "silbido-pombero",
+            titoPose: "scared",
           },
         ],
         goto: { type: "scene", scene: "senales" },
@@ -199,17 +215,21 @@ export const SCENES: Record<SceneId, Scene> = {
     time: "¿?",
     background: "monte",
     ambient: "forest",
+    titoPose: "walk",
+    hondita: "pocket",
     lines: [
       {
         text: "El sendero ya no es el mismo. Los árboles se cierran arriba y la luz cae en hilos, como por un techo de paja.",
       },
-      { text: "Tito mete la mano en el bolsillo. La hondita desapareció." },
-      { speaker: "tito", text: "¿Dónde…? Si la tenía recién…" },
+      { text: "Tito mete la mano en el bolsillo. La hondita desapareció.", titoPose: "idle", hondita: "none" },
+      { speaker: "tito", text: "¿Dónde…? Si la tenía recién…", titoPose: "scared" },
       {
         text: "En el barro hay huellas pequeñas, de pies anchos. Demasiado anchos para un niño.",
+        titoPose: "bow",
       },
       {
         text: "Y empiezan los silbidos. Desde la izquierda, desde atrás, desde arriba. Algunos son pájaros. Otros… no.",
+        titoPose: "scared",
         sfx: "muchos-silbidos",
       },
     ],
@@ -224,6 +244,8 @@ export const SCENES: Record<SceneId, Scene> = {
     time: "Anochecer",
     background: "claro",
     ambient: "night",
+    titoPose: "idle",
+    hondita: "none",
     lines: [
       { text: "Sin saber cómo, ya es de noche. Tito llega a un claro lleno de luciérnagas." },
       {
@@ -232,7 +254,7 @@ export const SCENES: Record<SceneId, Scene> = {
       {
         text: "Solo se le ven las manos: enormes, demasiado grandes para ese cuerpo, apoyadas sobre la madera.",
       },
-      { speaker: "tito", text: "(No grites, Tito. No grites…)" },
+      { speaker: "tito", text: "(No grites, Tito. No grites…)", titoPose: "scared" },
     ],
     choices: [
       {
@@ -240,11 +262,12 @@ export const SCENES: Record<SceneId, Scene> = {
         label: "Gritarle: «¡Pombero!»",
         respect: -30,
         outcome: [
-          { speaker: "tito", text: "¡POMBERO!" },
+          { speaker: "tito", text: "¡POMBERO!", titoPose: "shout" },
           {
             text: "Las luciérnagas se apagan todas a la vez. El tronco está vacío.",
             background: "claro-vacio",
             ambient: "silence",
+            titoPose: "scared",
           },
         ],
         goto: { type: "computeEnding" },
@@ -254,7 +277,7 @@ export const SCENES: Record<SceneId, Scene> = {
         label: "Saludar con respeto: «Buenas noches, Karai»",
         respect: 15,
         outcome: [
-          { speaker: "tito", text: "Buenas noches, Karai." },
+          { speaker: "tito", text: "Buenas noches, Karai.", titoPose: "bow" },
           {
             text: "La figura gira apenas la cabeza. Dos ojos brillan, amarillos como luciérnagas, y se quedan mirándolo un largo rato.",
             background: "claro-ojos",
@@ -271,11 +294,13 @@ export const SCENES: Record<SceneId, Scene> = {
         outcome: [
           {
             text: "Tito se acerca despacito y deja {ofrendas} sobre el tronco, al lado de esas manos enormes.",
+            titoPose: "offer",
           },
           {
             text: "Una mano se cierra sobre la ofrenda. Un silbido suave, casi una risa, recorre el claro.",
             sfx: "silbido-pombero",
             background: "claro-ojos",
+            titoPose: "bow",
           },
         ],
         goto: { type: "computeEnding" },
@@ -287,6 +312,7 @@ export const SCENES: Record<SceneId, Scene> = {
         outcome: [
           {
             text: "Tito corre sin mirar atrás. Las ramas le arañan los brazos y los silbidos lo siguen, riéndose.",
+            titoPose: "scared",
             background: "claro-vacio",
           },
         ],

@@ -9,6 +9,10 @@ anda el Karai Pyhare, protector de las aves.
 - Medidor "Respeto al monte" (una pluma) e inventario de ofrendas.
 - Minijuego **¿Pájaro o Pombero?** con silbidos sintetizados, subtítulos y onda
   animada (jugable sin audio).
+- Estilo cartoon con *cel shading*: contornos de tinta, sombras de borde duro,
+  cielos en bandas e interfaz tipo cómic.
+- Tito en tercera persona: se lo ve de espaldas, con poses que cambian según la
+  historia (apunta con la hondita, silba, se asusta, saluda, ofrece…).
 - Sin assets externos: ilustraciones SVG inline y sonido con Web Audio API.
 - Mouse, táctil y teclado (`1`–`4` opciones, `Espacio` avanzar, `R` repetir sonido).
 
@@ -31,15 +35,16 @@ npm run typecheck
 | `lib/audio.ts` | Motor de sonido sintetizado (ambientes, silbidos, efectos). |
 | `lib/storage.ts` | Persistencia de finales y preferencia de sonido en `localStorage`. |
 | `components/` | `Game`, `SceneView`, `DialogueBox`, `ChoiceList`, `RespectMeter`, `Inventory`, `OfferingPicker`, `BirdOrPomberoGame`, `EndingScreen`, `EndingsGallery`, `TitleScreen`, `HowToPlay`. |
-| `components/illustrations/` | Fondos y piezas SVG (rancho, lapacho, naranjos, monte, claro, Pombero en silueta). |
+| `components/illustrations/` | `cel.tsx` (herramientas de cel shading), `parts.tsx` (rancho, lapacho, naranjos, Pombero en silueta…), `SceneBackground.tsx` (fondos) y `Tito.tsx` (Tito de espaldas, con poses). |
 
 ### Editar la historia
 
 Las escenas viven en `SCENES` dentro de `data/story.ts`. Cada opción puede
 sumar o restar respeto (`respect`), mostrar consecuencias (`outcome`) y llevar a
 otra escena, a la cocina, al minijuego o a un final (`goto`). Una línea puede
-cambiar el fondo (`background`), el ambiente sonoro (`ambient`) o disparar un
-sonido (`sfx`). El marcador `{ofrendas}` se reemplaza por lo que lleva Tito.
+cambiar el fondo (`background`), el ambiente sonoro (`ambient`), la pose de
+Tito (`titoPose`), dónde tiene la hondita (`hondita`) o disparar un sonido
+(`sfx`). El marcador `{ofrendas}` se reemplaza por lo que lleva Tito.
 
 La regla de finales está en `computeEnding()`:
 

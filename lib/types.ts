@@ -36,6 +36,21 @@ export type AmbientId = "day" | "forest" | "night" | "silence";
 /** Efectos de sonido que una línea puede disparar al aparecer. */
 export type SfxId = "pitogue" | "hondita" | "silbido-tito" | "silbido-pombero" | "muchos-silbidos";
 
+/** Poses de Tito (se lo ve de espaldas, en tercera persona). */
+export type TitoPose =
+  | "idle"
+  | "walk"
+  | "aim"
+  | "whistle"
+  | "scared"
+  | "sleepy"
+  | "shout"
+  | "bow"
+  | "offer";
+
+/** Dónde está la hondita de Tito. */
+export type HonditaState = "hand" | "pocket" | "none";
+
 /** Una línea de diálogo o narración. */
 export interface Line {
   speaker?: SpeakerId;
@@ -47,6 +62,10 @@ export interface Line {
   ambient?: AmbientId;
   /** Sonido que se reproduce cuando aparece la línea. */
   sfx?: SfxId;
+  /** Cambia la pose de Tito a partir de esta línea. */
+  titoPose?: TitoPose;
+  /** Cambia dónde tiene Tito la hondita a partir de esta línea. */
+  hondita?: HonditaState;
 }
 
 /** Adónde lleva una opción (o el final de una escena sin opciones). */
@@ -79,6 +98,9 @@ export interface Scene {
   time: string;
   background: BackgroundId;
   ambient: AmbientId;
+  /** Pose inicial de Tito en la escena. */
+  titoPose: TitoPose;
+  hondita: HonditaState;
   lines: Line[];
   /** Opciones al terminar las líneas (2 a 4). */
   choices?: Choice[];

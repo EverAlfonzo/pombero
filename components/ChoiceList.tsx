@@ -39,11 +39,11 @@ export default function ChoiceList({
           <button
             type="button"
             onClick={() => onChoose(choice.id)}
-            className="group flex min-h-14 w-full items-center gap-3 rounded-xl border-2 border-papel/60 bg-tinta/90 px-4 py-3 text-left text-lg font-bold text-papel transition-colors hover:border-ocre hover:bg-[#2a1a12] sm:text-xl"
+            className="group comic-shadow comic-press flex min-h-14 w-full items-center gap-3 rounded-xl border-[3px] border-tinta bg-papel px-4 py-3 text-left text-lg font-bold text-tinta transition-colors hover:bg-ocre-claro sm:text-xl"
           >
             <span
               aria-hidden="true"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-ocre text-base text-tinta group-hover:bg-ocre-claro"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-tinta text-base text-papel group-hover:bg-tierra"
             >
               {i + 1}
             </span>

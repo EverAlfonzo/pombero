@@ -12,6 +12,7 @@ import { useEffect, useEffectEvent, useState } from "react";
 import { MINIGAME } from "@/data/story";
 import { audio, createWhistle, pomberoFreqAt, type WhistlePattern } from "@/lib/audio";
 import type { WhistleKind } from "@/lib/types";
+import { useSvgId } from "./illustrations/cel";
 import { Button, Kbd } from "./ui";
 
 interface Round {
@@ -80,13 +81,28 @@ function wavePath(pattern: WhistlePattern): string {
 
 function WhistleWave({ pattern, playId }: { pattern: WhistlePattern; playId: number }) {
   const color = "#ffe55c";
+  const clipId = useSvgId("wave");
   return (
     <div className="relative" aria-hidden="true">
       <svg
         viewBox={`0 0 ${WAVE_W} ${WAVE_H}`}
         preserveAspectRatio="none"
-        className="h-28 w-full rounded-xl border-2 border-papel/25 bg-[#0b1630]"
+        className="h-28 w-full rounded-xl border-[3px] border-tinta bg-[#0b1630]"
       >
+        <defs>
+          <clipPath id={clipId}>
+            {/* El rectángulo crece de izquierda a derecha mientras suena (la key lo reinicia). */}
+            <rect
+              key={playId}
+              x="0"
+              y="0"
+              width={WAVE_W}
+              height={WAVE_H}
+              className="wave-reveal"
+              style={{ animationDuration: `${pattern.duration}s` }}
+            />
+          </clipPath>
+        </defs>
         {[0.25, 0.5, 0.75].map((r) => (
           <line
             key={r}
@@ -100,25 +116,15 @@ function WhistleWave({ pattern, playId }: { pattern: WhistlePattern; playId: num
           />
         ))}
         <path
-          // La key reinicia la animación de dibujo en cada reproducción.
-          key={playId}
-          vectorEffect="non-scaling-stroke"
           d={wavePath(pattern)}
-          pathLength={1}
+          clipPath={`url(#${clipId})`}
+          vectorEffect="non-scaling-stroke"
           fill="none"
           stroke={color}
           strokeWidth={pattern.kind === "pajaro" ? 2.2 : 3.2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={
-            {
-              "--len": 1,
-              strokeDasharray: 1,
-              strokeDashoffset: 0,
-              filter: `drop-shadow(0 0 4px ${color})`,
-              animation: `wave-draw ${pattern.duration}s linear both`,
-            } as React.CSSProperties
-          }
+          style={{ filter: `drop-shadow(0 0 4px ${color})` }}
         />
       </svg>
       <span className="absolute top-1 left-2 text-xs text-papel/60">agudo</span>
@@ -199,14 +205,14 @@ export default function BirdOrPomberoGame({ onAnswer, onDone }: Props) {
     return () => window.removeEventListener("keydown", listener);
   }, []);
 
-  const panel = "rounded-2xl border-2 border-papel/30 bg-[#140c09]/92 p-5 shadow-2xl";
+  const panel = "comic-panel p-5";
 
   if (phase === "intro") {
     return (
       <div className={panel}>
-        <h2 className="font-display text-3xl font-bold text-luciernaga">{MINIGAME.title}</h2>
+        <h2 className="font-display text-3xl font-bold text-tierra-oscura">{MINIGAME.title}</h2>
         <p className="mt-2 text-lg leading-relaxed">{MINIGAME.intro}</p>
-        <p className="mt-2 text-sm text-papel/80">
+        <p className="mt-2 text-sm text-tinta/80">
           Sin sonido también se puede: mirá la onda y leé el subtítulo. <Kbd>R</Kbd> repite el sonido.
         </p>
         <Button className="mt-4 w-full sm:w-auto" onClick={() => startRound(0)} autoFocus>
@@ -219,7 +225,7 @@ export default function BirdOrPomberoGame({ onAnswer, onDone }: Props) {
   if (phase === "outro") {
     return (
       <div className={panel}>
-        <h2 className="font-display text-3xl font-bold text-luciernaga">
+        <h2 className="font-display text-3xl font-bold text-tierra-oscura">
           Acertaste {score} de {kinds.length}
         </h2>
         <p className="mt-2 text-lg leading-relaxed italic">
@@ -237,8 +243,8 @@ export default function BirdOrPomberoGame({ onAnswer, onDone }: Props) {
   return (
     <div className={panel}>
       <div className="flex items-baseline justify-between gap-2">
-        <h2 className="font-display text-2xl font-bold text-luciernaga sm:text-3xl">{MINIGAME.title}</h2>
-        <span className="font-bold tabular-nums text-papel/85">
+        <h2 className="font-display text-2xl font-bold text-tierra-oscura sm:text-3xl">{MINIGAME.title}</h2>
+        <span className="font-bold tabular-nums text-tinta/80">
           Ronda {index + 1}/{kinds.length}
         </span>
       </div>
@@ -247,7 +253,7 @@ export default function BirdOrPomberoGame({ onAnswer, onDone }: Props) {
         <WhistleWave pattern={round.pattern} playId={playId} />
         <p className="mt-2 text-center text-lg">
           <span className="sr-only">Subtítulo del sonido: </span>
-          <span className="rounded bg-black/60 px-2 py-0.5 font-bold text-papel">[{round.caption}]</span>
+          <span className="caption rounded bg-tinta px-2 py-0.5 font-bold text-papel">[{round.caption}]</span>
         </p>
       </div>
 
@@ -267,7 +273,7 @@ export default function BirdOrPomberoGame({ onAnswer, onDone }: Props) {
         <div className="mt-4 animate-rise">
           <p
             role="status"
-            className={`rounded-xl px-4 py-3 text-lg font-bold ${
+            className={`rounded-xl border-[3px] border-tinta px-4 py-3 text-lg font-bold ${
               lastAnswer?.correct ? "bg-[#5fae4f] text-tinta" : "bg-[#d4553a] text-papel"
             }`}
           >
